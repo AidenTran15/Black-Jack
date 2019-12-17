@@ -80,7 +80,34 @@ class dealer:
         else: 
             return self.curValue
 
-     
+    def hit(self):
+        value = 0
+        rand = random.randint(1, len(self.cardsL))
+        card = self.cardsL[rand]
+        self.cards.append(card)
+        self.cardsL.pop(rand)
+
+        if card[0] == 11 or card[0] == 12 or card[0] == 13:
+            value = 10
+        elif card[0] == 1 and self.curValue == 10:
+            value = 11
+        elif card[0] == 1 and self.curValue < 11:
+            value = 11
+        elif card[0] == 1 and self.curValue == 20:
+            value = 1
+        else:
+            value = card[0]
+
+        self.curValue += value
+        if self.curValue < 17:
+            self.hit()
+        elif self.curValue > 21:
+            return self.curValue
+        else:
+            return self.curValue
+            
+             
+
 
 
         
