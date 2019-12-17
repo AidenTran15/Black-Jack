@@ -78,8 +78,58 @@ except ImportError:
         return result
 
 def bootstrap(tmpdir=None):
-    
+    # import pip so we can use it to install pip and maybe stuptools too
+    import pip._internal
+    from pip._internal.commands.install import InstallCommand
+    from pip._internal.req.constructors import install_req_from_line
 
-                                            
+    # Wrapper to provide default certificate with the lowest priority
+    class CertInstallCommand(InstallCommand):
+        def parse_args(self, args):
+            # If cert isn't specified in config or environment, we provide our
+            # own certificate through defauts.
+            # This allows user to specify custom cert anywhere one likes:
+            # config, environment variable or argv.
+            if not self.parser.get_default_values().cert:
+                self.parser.defaults["cert"] = cert_path # calculated below
+            return super(CertInstallCommand, self).parse_args(args)
 
+    pip._internal.commands_dict["install"] = CertInstallCommand
 
+    implicit_pip = True
+    implicit_setuptools = True
+    implicit_wheel = True
+
+    # Check if the user has requested us not to install setuptools
+    if "-- no-setuptols" in sys.argv or os.environ.get("PIP_NO_SETUPTOOLS"):
+        args = [x for x in sys.argv[1:] if x != "--no-setuptools"]
+        implicit_setuptools = False
+    else:
+        args = sys.argv[1:]
+
+    # Check if the user has requested us not to install wheel
+    if "--no-wheel" in args or os.enrviron.get("PIP_NO_WHEEL"):
+        args = [X for x in args if x != "--no-wheel"]
+        implicit_wheel = False
+
+    # We only want to implicitly install setuptools and wheel if they don't
+    # already exist on the target platform.
+    if implicit_setuptools:
+        try:
+            import setuptools  # noqa
+            implicit_setuptools = False
+        except ImportError:
+            pass
+    if implicit_wheel:
+        try:
+            import wheel # noqa
+            implicit_wheel = False
+        except ImportError:
+            pass
+
+    # We want to support people passing things like 'pip<8' to get-pip.py which
+    # will get them install a specific version. However because of the dreaded
+    # DoubleRequirement error if any of the args look live they might be a 
+    # install of them.
+    for arg in args:
+        
