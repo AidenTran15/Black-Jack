@@ -14,11 +14,11 @@ import random
 
 
 class cards:
-     def __init__(self):
-         self.cardsL = []
-         for x in range(1,14):
-             card = x
-             for i in range(4):
+    def __init__(self):
+        self.cardsL = []
+        for x in range(1,14):
+            card = x
+            for i in range(4):
                 if i == 0:
                     suit = 'H'
                 elif i == 1:
@@ -28,4 +28,35 @@ class cards:
                 elif i == 3:
                     suit = 'S'
                 self.cardsL.append([card, suit])
+
+        self.cardsL = self.cardsL * 4
+
+    def getCards(self):
+        return self.cardsL * 4
+
+class dealer:
+    def __init__(self, c):
+        # 4 decks
+        self.curValue = 0
+        self.cardsL = c
+        self.cards = []
+
+    def deal(self):
+        r1 = random.randint(0, len(self.cardsL) - 1)
+        randCard = self.cardsL[r1]
+        self.cardsL.pop(r1)
+        self.cards.append(randCard)
+
+        r2 =random.randint(0, len(self.cardsL) - 1)
+        randCard2 = self.cardsL[r2]
+        self.cardsL.pop(r2)
+        self.cards.append(randCard2)
+
+        self.cardsL.pop(r2)
+        return self.cards
+
+    def decision(self):
+        
+
+            
 
