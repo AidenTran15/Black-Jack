@@ -178,7 +178,14 @@ class player():
 
         return card
     
-    def  
+    def getScore(self):
+        return self.curValue
+
+
+c = cards()
+deck = c.getCards()
+d = dealer(deck)
+p = player(deck)
 
 
 
