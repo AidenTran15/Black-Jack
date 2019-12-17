@@ -34,6 +34,7 @@ class cards:
     def getCards(self):
         return self.cardsL * 4
 
+
 class dealer:
     def __init__(self, c):
         # 4 decks
@@ -56,6 +57,32 @@ class dealer:
         return self.cards
 
     def decision(self):
+        value = 0 
+        if self.cards[0][0] == 1 and self.cards[1][0] == 1:
+            value = 2
+        else:
+            if self.cards[0][0] == 11 or self.cards[0][0] == 12 or self.cards[0][0] == 13:
+                value += 10
+            else:
+                value += self.cards[0][0]
+            if self.cards[1][0] == 11 or self.cards[1][0] == 12 or self.cards[1][0] == 13:
+                value =+ 10
+            else: 
+                value += self.cards[1][0]
+
+        self.curValue = value
+
+        if value == 11 and (self.cards[0][0] == 1 or self.cards[1][0] == 1):
+            self.curValue = 21 
+            return self.curValue
+        elif value < 17:
+            self.hit()
+        else: 
+            return self.curValue
+
+     
+
+
         
 
             
