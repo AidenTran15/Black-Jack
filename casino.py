@@ -108,7 +108,19 @@ class dealer:
 
     def getScore(self):
         return self.curValue
-        
+
+    def reset(self):
+        self.cards = []
+        self.curValue = 0
+
+    
+class player():
+    def __init__(self, c):
+        self.cardsL = c
+        self.cards = []
+        self.curValue = 0
+
+    def deal
 
 
 
