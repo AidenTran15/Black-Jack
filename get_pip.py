@@ -132,4 +132,16 @@ def bootstrap(tmpdir=None):
     # DoubleRequirement error if any of the args look live they might be a 
     # install of them.
     for arg in args:
+        try:
+            req = install_req_from_line(arg)
+        except Exception:
+            continue
+
+        if implicit_pip and req.name =="pip":
+            implicit_pip = False
+        elif implicit_setuptools and req.name == "setuptools":
+            implicit_setuptools = False
+        elif implicit_wheel and req.name == "wheel":
+            implicit_wheel = False
         
+    # Add any implicit installations to the end of our args
