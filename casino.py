@@ -105,8 +105,10 @@ class dealer:
             return self.curValue
         else:
             return self.curValue
-            
-             
+
+    def getScore(self):
+        return self.curValue
+        
 
 
 
