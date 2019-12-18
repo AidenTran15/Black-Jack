@@ -20,7 +20,7 @@ failed = []
 # Try to open reqirenmts.txt file and read all required packages
 try:
     file = open("requirements.txt", "r")
-    file_lines = [line.strip().lower() for line in file)lines]
+    file_lines = [line.strip().lower() for line in file_lines]
     file.close()
 except FileNotFoundError:
     print("[ERROR] No requiremnts.txt file found")
@@ -38,7 +38,7 @@ if len(required) > 0:
                 with contextlib.redirect_stdout(None):
                     __import__(package)
                 print("[LOG]", package, "is already installed, skipping...")
-            except Importerror:
+            except ImportError:
                 print("[LOG]", package, "not installed")
 
                 try:
@@ -48,7 +48,7 @@ if len(required) > 0:
                     except:
                         print("[EXCEPTION] Pip is not installed")
                         print("[LOG] Trying to insatll pip")
-                        get_pip.main()
+                        get_pip.main
                         print("[LOG] Pip has been installed")
 
                     print("[LOG] Installing", package)
