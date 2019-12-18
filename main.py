@@ -143,3 +143,7 @@ def lost():
             break
         if ev.type == pygame.QUIT:
             pygame.quit()
+    
+
+def bet():
+    global betChips
