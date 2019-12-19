@@ -147,3 +147,89 @@ def lost():
 
 def bet():
     global betChips
+    global playerChips
+    label = myfont.render('Please place your bet: ', 1, (255,255,255))
+    screen.blit(label, (230,430))
+    updateChips()
+    pygame.diplay.update()
+    while True:
+        label = smallFont.render('Press space when finished', 1, (255,255,255))
+        screen.blit(label, (430,850))
+        updateChips()
+        pygame.display.update()
+        ev = pygame.event.poll()
+        if ev.type == pygame.MOUSEBUTTONDOWN:
+            pos = pygame.mouse.get_pos()
+            for i in range(len(Chips)):
+                if pos[0] > chips[i][1] and pos[0] < chips[i][1] + 50:
+                    if pos[1] > chip[i][2] and pos[1] < chips[i][2] + 50:
+                        if playerChips - chips[i][3] >= 0:
+                            betChips += chips[i][3]
+                            dealChips(chips[i][0], 525 + i * 50, 550, chips[i][1], chips[i][2])
+                            playerChips -= chips[i][3]
+                        else:
+                            root = tk.Tk()
+                            messagebox.showinfo('Not enough chips!', (' You do not have enough \n chips to bet that amount, \n your current'))
+                            try:
+                                root.destroy()
+                            except:
+                                    pass
+        if ev.type == pygame.QUIT:
+            pygame.quit()
+        if ev.type == pygame.KEYDOWN:
+            if betChips >= 1:
+                pygame.draw.rect(screen, (0, 128, 0), (429, 849, 600, 100))
+                break
+
+
+def drawChip(img, x, y):
+    w = 50
+    h = 50
+    newIMG = pygame.transform.scale(img, (w, h))
+    screen.blit(newIMG, (x,y))
+
+
+def firstStart():
+    global playerChips
+    reset()
+    playerChips = 50
+    screen.fill((0,128,0))
+    label = myfont.render('Welcome to Black Jack!', 1, (255,255,255))
+    label2 = myfont.render('Press space to start', 1, (255,255,255))
+    screen.blit(label2, (225, 550))
+    screen.blit(label, (175, 400))
+    pygame.display.update()
+    pygame.init()
+
+    while True:
+        clock.tick(60)
+        ev = pygame.event.poll()
+        if en.type == pygame.QUIT:
+            pyfgame.quit()
+        if ev.type == pygame.KEYDOWN:
+            dealplayer(675, 650)
+            dealplayer(500, 650)
+            dealplayer(675, 50)
+            dealplayer(500, 50)
+            bet()
+            main()
+
+def restart():
+    global playerChips
+    screen.fill((0,128,0))
+    pygame.display.update()
+    pygame.init()
+
+    if playerChips == 0:
+        lost()
+
+    while True:
+        clock.tick(60)
+        dealplaer(675, 650)
+        dealplayer(500, 650)
+        dealplayer(675, 50)
+        dealplayer(500, 50)
+        bet()
+        main()
+
+def reset
