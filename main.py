@@ -232,4 +232,41 @@ def restart():
         bet()
         main()
 
-def reset
+def reset():
+    global onTable
+    global cardImg
+    global topCards
+    global didBet
+    global betChips
+    global betArray
+    betArray =[]
+    onTable = []
+    topCards = []
+    didBet = False
+    betChips = 0
+    time.sleep(1)
+
+
+def dealChips(img, x, y, s, w):
+    end = x
+    endy = y
+    movex = s
+    movey = w
+    x_dist = x - s
+    y_dist = y - w
+    constant_x = x_dist / 50
+    consatnt_y = y_dist/ 30
+
+    for i in range(100):
+        if movey >= endy and movex >= endx:
+            break
+        else:
+            screen.fill((0, 128, 0))
+            drawChip(img, movex, movey)
+            if movex <= endx:
+                movex += constant_x
+            if movey <= endy:
+                movey += constant_y
+
+        for d in range(len(onTable)):
+            drawCard 
