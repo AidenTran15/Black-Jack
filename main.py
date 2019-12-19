@@ -401,14 +401,14 @@ def main():
     while True:
 
         pygame.display.update()
-        clock.tick(60)
+        clock.tick(60)  
         # PLAYER DECISION
         if playerReveal == False:
-        drawCard(cardBack, 675, 650)
-        drawCard(cardBack, 500, 650)
-        label = smallFont.render('Press space to reveal cards', 1, (255,255,255))
-        screen.blit(label, (430, 850))
-        ev = pygame.event.poll()
+            drawCard(cardBack, 675, 650)
+            drawCard(cardBack, 500, 650)
+            label = smallFont.render('Press space to reveal cards', 1, (255,255,255))
+            screen.blit(label, (430, 850))
+            ev = pygame.event.poll()
         if ev.type == pygame.QUIT:
             pygame.quit()
         if ev.type == pygame.KEYDOWN:
@@ -470,7 +470,7 @@ def main():
                     pygame.display.update()
                     break
 
-            elif p.getScore() == 21 amd len(p.cards) == 2:
+            elif p.getScore() == 21 and len(p.cards) == 2:
                 allowHit = False
                 playerChips += betChips * 3
                 label = myfont.render('BLACK JACK!', 1, (255, 255, 255))
@@ -491,3 +491,34 @@ def main():
 
 
         # DEALER
+
+        if playerTurn == False:
+            drawCard(cardImage(dealerCards[1][0], dealerCards[1][1]), 500, 50)
+            try:
+                ind = onTable.index([cardBack, 500, 50])
+                ontable[ind] = [cardImage(dealerCards[1][0], dealerCards[1][1]), 500, 50]
+            except:
+                pass
+            updateScore()
+            if len(d.cards) > 2:
+                dealplayerHit(cardImage(dealerCards[2][0], dealerCards[2][1]), 325, 50)
+                drawCard(cardImage(dealerCards[2][0], dealercards[2][1]), 325, 50)
+                pygame.display.update()
+                time.sleep(0.3)
+            if len(d.cards) > 3:
+                dealplayerHit(cardImage(dealerCards[3][0], dealerCards[3][1]), 850, 50)
+                drawcards(cardImage(dealerCards[3][0], dealerCards[3][1]), 850, 50)
+                pygame.display.update()
+                timesleep(0.3)
+            if len(d.cards) > 5:
+                dealplayerHit(cardImage(dealerCards[5][0], dealerCards[5][1]), 1025, 50)
+                deawCard(cardImage(dealerCards[5][0], dealerCards[5][1]), 1025, 50)
+                pygame.display.update()
+                time.sleep(0.3)
+            updateScore(True)
+
+            if d.getScore() > p.getScore():
+                if d.getScore() < 22:
+                    label = myfont.render('You lost' , 1, (225,255,255))
+                    screen.blit(label, (510, 430))
+                    updateChips() 
