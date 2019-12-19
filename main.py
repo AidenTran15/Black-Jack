@@ -446,5 +446,48 @@ def main():
                         elif len(p.cards) == 4:
                             dealplayerHit(cardImage(hitCard[0], hitCard[1]), 850, 650)
                             drawCard(cardImage(hitCard[0],hitCard[1]), 850, 650)
+                            updateScore
+                        elif  len(p.cards) == 5:
+                            dealplayerHit(cardImage(hitCard[0], hitCard[1]), 150, 650)
+                            drawCard(cardImage(hitCard[0], hitCard[1]), 150, 650)
+                            updateScore()
+                        elif len(p.cards) == 6:
+                            dealplayerHit(cardImage(hitCard[0], hitCard[1]), 1025, 650)
+                            drawCard(cardImage(hitCard[0], hitCard[1]), 1025, 650)
+                            updateScore()
+                    allowHit = True
+                    pygame.display.update()
+
+                if p.getScore() > 21:
+                    label = myfont.render('You Went Over 21 :(', 1, (255,255,255))
+                    screen.blit(label, (300, 430))
+                    allowHit = False
+                    updateChips()
+                    pygame.display.update()
+                    time.sleep(1)
+                    pygame.draw.rect(screen, (0,128,0), (0, 640, 1300,200))
+                    pygame.draw.rect(screen, (0, 128, 0), (200,40,1300, 200))
+                    pygame.display.update()
+                    break
+
+            elif p.getScore() == 21 amd len(p.cards) == 2:
+                allowHit = False
+                playerChips += betChips * 3
+                label = myfont.render('BLACK JACK!', 1, (255, 255, 255))
+                screen.blit(label, (420,430))
+                updateChips()
+                pygame.display.update()
+                time.sleep(1)
+                pygame.draw.rect(screen, (0, 128, 0), (0, 640, 1300, 200))
+                pygame.draw.rect(screen, (0, 128, 0), (200, 40, 1300, 200))
+                pygame.display.update()
+                break
+
+            elif playerStay:
+                playerTurn = False
+                allowHit = False
+                updateScore()
+                pygame.display.update()
 
 
+        # DEALER
