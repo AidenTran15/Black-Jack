@@ -342,4 +342,109 @@ def dealplayerHit(hit,x,y):
     onTable.append([hit, x, y])
 
 
-    
+def cardImage(n, suit):
+
+    if suit == 'C':
+        return cardImg[n][0]
+    elif suit == 'D':
+        return cardImg[n][1]
+    elif suit == 'H':
+        return cardImg[n][2]
+    elif suit == 'S':
+        return cardImg[n][3]
+
+
+def updateChips():
+    global playerChips
+    pygame.draw.rect(screen, (0,128,0), (39, 585, 200, 40), 0)
+    label = smallFont.render('Chips: ' + str(playerChips), 1, (255,255.255))
+    screen.blit(label, (10, 585))
+
+
+def updateScore(turn=False):
+    dScore = d.getScore()
+    pScore = p.getScore()
+    score1 = smallFont.render(str(dScore), 1, (255,255,255))
+    score2 = smallFont.render(str(pScore), 1, (255, 255, 255))
+    screen.blit(score2, (1150, 700))
+    if turn:
+        screen.blit(newIMG, (x,y))
+
+
+def drawCard(img, x, y):
+    white = (255, 255, 255)
+    w = 130
+    h = 181
+    pygame.draw.rect(screen, white, (x -5, y-4, w + 10, h + 8), 0)
+    newIMG = pygame.transform.scale(img, (w, h))
+    screen.blit(newIMG, (x,y))
+
+
+def main():
+    # Drawing and INIT
+    # Variable
+    global d
+    global p
+    global playerChips
+    deck = casino.cards()
+    cardList = deck.getCards()
+    d = casino.dealer(cardList)
+    p = casino.player(cardList)
+    playerCards = p.deal()
+    dealerCards = d.deal()
+    allowHit = False
+    playerReveal = False
+    playerTurn = False
+    playerStay = False
+    onTable[2] = [cardImage(dealerCards[0][0], delaerCards[0][q]), 675, 50]
+    onTable[3] = [cardBack, 500, 50]
+    while True:
+
+        pygame.display.update()
+        clock.tick(60)
+        # PLAYER DECISION
+        if playerReveal == False:
+        drawCard(cardBack, 675, 650)
+        drawCard(cardBack, 500, 650)
+        label = smallFont.render('Press space to reveal cards', 1, (255,255,255))
+        screen.blit(label, (430, 850))
+        ev = pygame.event.poll()
+        if ev.type == pygame.QUIT:
+            pygame.quit()
+        if ev.type == pygame.KEYDOWN:
+            if ev.key == pygame.K_SPACE:
+                # Show cards
+                playerReveal = True
+                allowHit = True
+                drawCard(cardImage(playerCards[0][0], playerCards[0][1]), 675, 650)
+                drawCard(cardImage(playerCards[1][0], playerCards[1][1]), 500, 650)
+                onTable[0] = [cardImage(playerCards[0][0], playerards[0][1]), 675, 650]
+                onTable[1] = [cardImage(playerCards[1][0], playerCards[1][1]), 500, 650]
+                pygame.draw.rect(screen, (0, 128, 0), (429, 849, 550, 100))
+            pygame.display.update()
+        else:
+            label = smallFont.render('Press space to hit and tab to stay', 1, (255, 255, 255))
+            screen.blit(label, (350, 850))
+            updateScore()
+            pygame.display.update()
+
+            ev = pygame.event.poll()
+            if ev.type == pygame.QUIT:
+                pygame.quit()
+            if ev.type == pygame.KEYDOWN:
+                if ev.key == pygame.K_TAB:
+                    playerStay = True
+                    updateScore(True)
+                if ev.key == pygame.K_SPACE:
+
+                    if allowHit:
+                        hitCard = p.hit()
+                        if len(p.cards) == 3:
+                            dealplayerHit(cardImage(hitCard[0], hitCard[1]), 325, 650)
+                            drawCard(cardImage(hitCard[0], hiCard[1]), 325, 650)
+                            updateScore()
+                        elif len(p.cards) == 4:
+                            dealplayerHit(cardImage(hitCard[0], hitCard[1]), 850, 650)
+                            drawCard(cardImage(hitCard[0],hitCard[1]), 850, 650)
+
+
