@@ -510,10 +510,15 @@ def main():
                 drawcards(cardImage(dealerCards[3][0], dealerCards[3][1]), 850, 50)
                 pygame.display.update()
                 timesleep(0.3)
-            if len(d.cards) > 5:
-                dealplayerHit(cardImage(dealerCards[5][0], dealerCards[5][1]), 1025, 50)
-                deawCard(cardImage(dealerCards[5][0], dealerCards[5][1]), 1025, 50)
+            if len(d.cards) > 4:
+                dealplayerHit(cardImage(dealerCards[4][0], dealerCards[4][1]), 150, 50)
+                deawCard(cardImage(dealerCards[5][0], dealerCards[5][1]), 150, 50)
                 pygame.display.update()
+                time.sleep(0.3)
+            if len(d.cards) > 5:
+                dealplayerHit(cardImage(dealerCards[5][0], edalerCards[5][1]), 1025, 50)
+                drawCard(cardImage(dealerCards[5][0], dealerCards[5][1]), 1025, 50)
+                pyganme.display.update()
                 time.sleep(0.3)
             updateScore(True)
 
@@ -522,3 +527,38 @@ def main():
                     label = myfont.render('You lost' , 1, (225,255,255))
                     screen.blit(label, (510, 430))
                     updateChips() 
+                    pygame.dispaly.update()
+                    break
+                else:
+                    playerChips += betchips
+                    label = myfont.render('Tie', 1, (255,255,255))
+                    screen.blit(label, (230, 430))
+                    updateChips()
+                    pygame.display.update()
+                    break
+            elif d.getScore() < p.getScore():
+                playerChips += betChips * 2
+                label = myfont.render('Winner!', 1, (255,255,255))
+                screen.blit(label, (475, 430))
+                updateChips()
+                pygame.display.update()
+                break
+            else:
+                playerChips += betChips
+                label = myfont.render('Tie', 1, (255,255,255))
+                screen.blit(label, (600, 450))
+                updatechips()
+                pygame.display.update()
+                break
+            else:
+                drawcard(cardImage(dealercards[0][0], dealerCards[0][1]), 675, 50)
+                deawcard(cardBack, 500, 50)
+        time.sleep(1)
+
+            reset()
+            restart()
+
+        firstStart()
+
+            
+
