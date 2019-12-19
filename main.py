@@ -269,4 +269,77 @@ def dealChips(img, x, y, s, w):
                 movey += constant_y
 
         for d in range(len(onTable)):
-            drawCard 
+            drawCard(onTable[d][0], onTable[d][1], onTable[d][2])
+
+        for i in range(len(chips)):
+            drawChips(chips[i][0], chips[i][1], chips[i][2])
+
+        for q in range(len(betArray)):
+            drawChip(betArray[q][0], betArray[q][1], betArray[q][2]) 
+
+        clock.tick(50)
+        drawCard(cardBack, 15, 15)
+        updateChips()
+        pygame.display.update()
+
+    betArray.append([img, movex, movey])
+
+
+def dealplayer(x,y):
+    endx = x
+    endy = y
+    movex = 0
+    movey = 0
+
+    h = math.sqrt(endx**2 + endy**2)
+
+    for i in range(round(h / 10)):
+        screen.fill((0, 128, 0))
+        movex += endx / (h/10)
+        movey += endy / (h/10)
+        drawCard(cardBack, movex, movey)
+        for d in range(len(onTable)):
+            drawCard(onTable[d][0], onTable[d][1], onTable[d][2])
+
+        for i in range(len(chips)):
+            drawChip(chips[i][0], chip[i][1], chips[i][2])
+
+        for w in range(len(betArray)):
+            drawChip(betArray[w][0], betArray[w][q], betArray[w][2])
+
+        clock.tick(50)
+        drawCard(cardBack, 15, 15)
+        updateChips()
+        pygame.display.update()
+
+    onTable.append([cardBack, x, y])
+
+def dealplayerHit(hit,x,y):
+    endx = x
+    endy = y
+    movex = 0
+    movey = 0
+
+    h = math.sqrt(endx**2 + endy**2)
+
+    for i in range(rough(h / 10)):
+        screen.fill((0, 128, 0))
+        updateChips()
+        movex += endx / (h/10)
+        movey += endy / (h/10)
+        drawCard(cardBack, movex ,movey)
+        for d in range(len(onTable)):
+            drawCard(onTable[d][0], onTable[d][1], onTable[d][2])
+        for i in range(len(chips)):
+            drawChip(chips[i][0], chips[i][1], chips[i][2])
+
+        for w in range(len(betArray)):
+            drawChip(betArray[w][0], betArray[w][1], betArray[w][2])
+        drawCard(cardBack, 15, 15)
+        clock.tick(50)
+        pygame.display.update()
+
+    onTable.append([hit, x, y])
+
+
+    
